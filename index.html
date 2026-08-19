@@ -61,7 +61,9 @@
       --glass-black: #70A1FF;
       --glass-black-bg: rgba(112, 161, 255, 0.08);
       --glass-diamond: #FF4757;
+      --glass-diamond-bg: rgba(255, 71, 87, 0.08);
       --glass-club: #70A1FF;
+      --glass-club-bg: rgba(112, 161, 255, 0.08);
     }
 
     /* 4-Color Accessibility Palette */
@@ -142,13 +144,21 @@
     [data-theme="daylight"] {
       --bg-canvas: #E6DCC8;
       --bg-workbench: #F6F1E5;
-      --bg-workbench-vignette: radial-gradient(circle at 50% 30%, #FFFDF6 0%, #F1E8D7 55%, #DCCFB6 100%);
+      /* Daylight through a leaded window: pools of amber, rose and cool blue
+         glass cast onto a warm cream ground, rather than a flat parchment
+         wash. Mirrors how the dark themes light a single hue out of the
+         gloom -- same premise, lit from the other side. */
+      --bg-workbench-vignette:
+        radial-gradient(ellipse at 20% 14%, rgba(255, 168, 76, 0.34) 0%, rgba(255, 168, 76, 0) 44%),
+        radial-gradient(ellipse at 82% 20%, rgba(203, 82, 114, 0.26) 0%, rgba(203, 82, 114, 0) 42%),
+        radial-gradient(ellipse at 72% 90%, rgba(96, 150, 194, 0.16) 0%, rgba(96, 150, 194, 0) 42%),
+        radial-gradient(circle at 50% 30%, #FFFEF9 0%, #F6EEDF 54%, #E7DCC6 100%);
       --copper-foil: #A8541F;
       --copper-foil-bright: #99490F;
       --copper-foil-glint: #7A3510;
       --copper-foil-dark: #5E2A0C;
-      --solder-lead: #C7B99F;
-      --cathedral-glow: rgba(255, 206, 138, 0.30);
+      --solder-lead: #8A7B62;
+      --cathedral-glow: rgba(255, 198, 122, 0.42);
       --text-parchment: #2A2118;
       --text-muted: #6B6053;
       --glass-panel: rgba(253, 250, 244, 0.97);
@@ -174,7 +184,9 @@
       --glass-black: #1C2330;
       --glass-black-bg: rgba(28, 35, 48, 0.09);
       --glass-diamond: #C0392B;
+      --glass-diamond-bg: rgba(192, 57, 43, 0.10);
       --glass-club: #1C2330;
+      --glass-club-bg: rgba(28, 35, 48, 0.09);
     }
 
     /* Keep the 4-colour palette legible on the light theme */
@@ -1039,7 +1051,7 @@
 
     .game-card.suit-diamonds {
       color: var(--glass-diamond);
-      background: linear-gradient(180deg, rgba(255, 71, 87, 0.08) 0%, var(--card-face-bg) 70%);
+      background: linear-gradient(180deg, var(--glass-diamond-bg) 0%, var(--card-face-bg) 70%);
     }
 
     .game-card.suit-spades {
@@ -1049,7 +1061,7 @@
 
     .game-card.suit-clubs {
       color: var(--glass-club);
-      background: linear-gradient(180deg, rgba(112, 161, 255, 0.08) 0%, var(--card-face-bg) 70%);
+      background: linear-gradient(180deg, var(--glass-club-bg) 0%, var(--card-face-bg) 70%);
     }
 
     /* Corner index. Left-aligned like a real deck so the rank+suit of a
