@@ -4206,9 +4206,23 @@
       if (isWon || !card.isFaceUp) return;
       clearHints();
 
+      // The cards that would travel with this one. removeCardFromSource()
+      // splices a tableau column from this card to the end, so anything above
+      // it comes along whether we want it or not.
+      var movingStack = getStackFromSource(card, sourceLocation);
+
+      // Foundations take exactly one card. Without this guard, tapping a
+      // buried card sent that single card to the foundation while the splice
+      // silently deleted every card stacked on top of it.
+      var isTopCard = movingStack.length === 1;
+
+      // A buried run only travels as a unit if it is a genuine descending,
+      // alternating-colour sequence -- the same rule drag enforces.
+      var stackIsMovable = isTopCard || isSequentialRun(movingStack);
+
       // 1. Foundation Move
       for (var f = 0; f < 4; f++) {
-        if (canDropOnFoundation(card, f)) {
+        if (isTopCard && canDropOnFoundation(card, f)) {
           saveStateForUndo();
           removeCardFromSource(card, sourceLocation);
           foundations[f].push(card);
@@ -4222,11 +4236,12 @@
       }
 
       // 2. Tableau Move
+      if (!stackIsMovable) return;
+
       for (var c = 0; c < tableau.length; c++) {
         if (sourceLocation.type === 'tableau' && sourceLocation.col === c) continue;
         if (canDropOnTableau(card, c)) {
           saveStateForUndo();
-          var movingStack = getStackFromSource(card, sourceLocation);
           removeCardFromSource(card, sourceLocation);
           for (var k = 0; k < movingStack.length; k++) {
             tableau[c].push(movingStack[k]);
